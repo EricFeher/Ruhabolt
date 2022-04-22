@@ -1,0 +1,19 @@
+<div fxLayout="row wrap" fxLayoutGap="0"  fxLayoutAlign="center">
+  <div class="div-card" fxFlex="20%" fxFlex.xs="80%" fxFlex.sm="33%" fxLayout fxLayoutGap="30px" *ngFor="let item of items;">
+    <mat-card card class="z-depth">
+      <span>
+        <mat-card-content>
+            <img mat-card-image class="galleryImage" [src]="item.imageUrl" />
+          <div class="name">{{item.name}}</div>
+          <div>Ár: {{item.price}}</div>
+          <div>Darabszám: {{item.count}}</div>
+        </mat-card-content>
+        <mat-card-actions>
+            <div>
+              <button mat-raised-button color="primary" (click)="toCart(item)">To Cart</button>
+            </div>
+        </mat-card-actions>
+      </span>
+    </mat-card>
+  </div>
+</div>

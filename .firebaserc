@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "clothing-shop-cdf74": {
+      "hosting": {
+        "clothing-store": [
+          "clothingshop2022"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "clothing-shop-cdf74"
+  }
+}
