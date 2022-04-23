@@ -6,10 +6,12 @@ import { ViewerComponent } from './viewer/viewer.component';
 import {MatCardModule} from "@angular/material/card";
 import {FlexLayoutModule} from "@angular/flex-layout";
 import {MatButtonModule} from "@angular/material/button";
+import {MainComponent} from "./main.component";
 
 
 @NgModule({
   declarations: [
+    MainComponent,
     ViewerComponent
   ],
   exports: [

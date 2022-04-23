@@ -1,0 +1,21 @@
+<div class="cartOrder" fxLayoutAlign="start start" fxLayoutGap="0px">
+  <mat-card card class="z-depth">
+    <mat-card-title>
+      <h1>Your Cart</h1>
+    </mat-card-title>
+    <mat-card-content>
+      <p>Dear customer, you can find your items in the left side of the screen, you can freely delete them by
+        pressing the "Delete" button.</p>
+      <p>The delivery time ranges between 1 week to a month.</p>
+      <h2>Price: {{priceInput}}</h2>
+    </mat-card-content>
+    <mat-card-actions>
+          <span class="buttons">
+            <button mat-raised-button color="primary" (click)="onSubmit()">Order</button>
+          </span>
+      <span class="buttons">
+            <button mat-raised-button color="primary" (click)="goBack()">Back</button>
+          </span>
+    </mat-card-actions>
+  </mat-card>
+</div>

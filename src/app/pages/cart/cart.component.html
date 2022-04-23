@@ -1,0 +1,7 @@
+<div class="container">
+  <div fxLayout>
+    <app-loader (priceEmitter)="getPrice($event)" (itemsEmitter)="getItems($event)" (cartEmitter)="getCart($event)"></app-loader>
+    <app-viewer [itemsInput]="items" [cartInput]="cart" fxFlex="70%" fxFlex.xs="60%" fxFlex.sm="65%" fxLayout fxLayoutGap="0px"></app-viewer>
+    <app-sidecard [priceInput]="price"  [cartInput]="cart" ></app-sidecard>
+  </div>
+</div>

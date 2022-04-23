@@ -17,14 +17,12 @@ import { provideAuth,getAuth } from '@angular/fire/auth';
 import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { provideStorage,getStorage } from '@angular/fire/storage';
 import { AngularFireModule} from '@angular/fire/compat';
-import { MainComponent } from './pages/main/main.component'
 import {MainModule} from "./pages/main/main.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    MenuComponent,
-    MainComponent
+    MenuComponent
   ],
   imports: [
     BrowserModule,
@@ -39,8 +37,7 @@ import {MainModule} from "./pages/main/main.module";
     AngularFireModule.initializeApp(environment.firebase),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),
-    provideStorage(() => getStorage()),
-    MainModule,
+    provideStorage(() => getStorage())
   ],
   providers: [],
   bootstrap: [AppComponent]

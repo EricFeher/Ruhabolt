@@ -14,9 +14,9 @@
           <ul fxLayout fxLayoutGap="10px" class="navigation-items">
             <li *ngIf="loggedInUser"><a routerLink="/main">Shop</a></li>
             <li *ngIf="!(loggedInUser)"><a routerLink="/login">Login</a></li>
+            <li *ngIf="loggedInUser"><a routerLink="/cart">Cart</a></li>
             <li *ngIf="loggedInUser"><a routerLink="/login" (click)="logout()">Logout</a></li>
             <li *ngIf="!(loggedInUser)"><a routerLink="/signup">Register</a></li>
-
           </ul>
         </div>
       </mat-toolbar>

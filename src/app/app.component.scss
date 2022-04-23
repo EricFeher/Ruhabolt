@@ -3,6 +3,10 @@ a {
     color: white;
 }
 
+html,body{
+  height: 100%;
+}
+
 a:hover, a:active {
     color: lightgray;
 }
