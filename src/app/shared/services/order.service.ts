@@ -20,6 +20,9 @@ export class OrderService {
     return this.afs.collection<Order>(this.collectionName).valueChanges();
   }
 
+  getAllOrderedByDate() {
+    return this.afs.collection<Order>(this.collectionName,ref => ref.orderBy('dateOfOrder')).valueChanges();
+  }
   getById(id: string) {
     return this.afs.collection<Order>(this.collectionName).doc(id).valueChanges();
   }

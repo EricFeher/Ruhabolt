@@ -41,10 +41,17 @@ export class MainService {
     return this.afs.collection<ShoppingItem>(this.collectionName).doc(id).delete();
   }
 
-  async decreaseItemByOne(item: Cart) {
-    // storage.getItemById();
-    let storageItem: ShoppingItem;
+  getAllLimit() {
+    return this.afs.collection<ShoppingItem>(this.collectionName,ref => ref.where("count",">",0).orderBy("count","desc").limit(20)).valueChanges();
+  }
 
+  getAllType(type:string){
+    console.log("type");
+    return this.afs.collection<ShoppingItem>(this.collectionName,ref => ref.where('type','==',type).where("count",">",0).orderBy("count","desc")).valueChanges();
+  }
+
+  async decreaseItemByOne(item: Cart) {
+    let storageItem: ShoppingItem;
     this.getById(item.itemsID).subscribe(result => {
       storageItem = result as ShoppingItem;
     });
@@ -53,7 +60,6 @@ export class MainService {
 
     // @ts-ignore;
     storageItem.count--;
-
     // @ts-ignore;
     this.update(storageItem).then(_ => {
       console.log(`[STORAGE] Decrease item by one: ${storageItem.count}`)

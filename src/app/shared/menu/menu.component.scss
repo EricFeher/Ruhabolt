@@ -6,3 +6,8 @@ a {
 a:hover, a:active {
     color: lightgray;
 }
+
+mat-nav-list{
+  position: fixed;
+  top:0;
+}

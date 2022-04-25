@@ -36,7 +36,7 @@ export class CartService {
   }
 
   deleteFromCart(item: Cart) {
-    this.delete(item.id).then(_=> console.log("ole"));
+    this.delete(item.id).then(_=> console.log("Deleted from cart"));
   }
 
 }

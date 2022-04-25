@@ -1,8 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit} from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { AuthService } from './shared/services/auth.service';
+import {User} from "./shared/models/user";
+import {UserService} from "./shared/services/user.service";
+import {AdminService} from "./shared/services/admin.service";
 
 @Component({
   selector: 'app-root',
@@ -13,10 +16,15 @@ export class AppComponent implements OnInit {
   page = '';
   routes: Array<string> = [];
   loggedInUser?: firebase.default.User | null;
+  isAdmin: boolean=false;
   title: any;
+  user?: User;
 
   constructor(private router: Router,
-              private authService: AuthService) {}
+              private authService: AuthService,
+              private userService: UserService,
+              private adminService: AdminService,
+              private elementRef: ElementRef) {}
 
   ngOnInit() {
     this.routes = this.router.config.map(conf => conf.path) as string[];
@@ -29,11 +37,21 @@ export class AppComponent implements OnInit {
         console.log(user);
         this.loggedInUser = user;
         localStorage.setItem('user', JSON.stringify(this.loggedInUser));
+        localStorage.setItem('admin', JSON.stringify(null));
+        this.isAdmin=false;
+        this.getUser();
+        this.getAdmin();
       }, error => {
         console.error(error);
-        localStorage.setItem('user', JSON.stringify('null'));
+        localStorage.setItem('user', JSON.stringify(null));
+        localStorage.setItem('admin', JSON.stringify(null));
       });
     });
+  }
+
+  ngAfterViewInit() {
+    this.elementRef.nativeElement.ownerDocument
+      .body.style.backgroundColor = '#303030';
   }
 
   changePage(selectedPage: string) {
@@ -55,6 +73,29 @@ export class AppComponent implements OnInit {
       console.log('Logged out successfully.');
     }).catch(error => {
       console.error(error);
+    });
+  }
+
+  getUser(){
+    if(this.loggedInUser) {
+      const obs = this.userService.getById(this.loggedInUser.uid).subscribe(user => {
+        obs.unsubscribe();
+        this.user = user;
+      });
+    }
+  }
+
+  getAdmin(){
+    console.log("[getAdmin()]: "+this.loggedInUser?.uid);
+    const obs=this.adminService.getByUid(this.loggedInUser?.uid as string).subscribe(data=>{
+      obs.unsubscribe();
+      console.log("[getAdmin()]: "+data[0].uid);
+      if(data[0]){
+        this.isAdmin=true;
+        localStorage.setItem('admin', JSON.stringify({admin: true}));
+      }else{
+        localStorage.setItem('admin', JSON.stringify(null));
+      }
     });
   }
 }

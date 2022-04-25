@@ -1,7 +1,7 @@
 <mat-sidenav-container>
-    <mat-sidenav #sidenav>
-      <app-menu (selectedPage)="changePage($event)" [currentPage]="page" *ngIf="page" (onCloseSidenav)="onClose($event, sidenav)" [loggedInUser]="loggedInUser" (onLogout)="logout($event)"></app-menu>
-    </mat-sidenav>
+  <mat-sidenav #sidenav>
+    <app-menu (selectedPage)="changePage($event)" [currentPage]="page" *ngIf="page" (onCloseSidenav)="onClose($event, sidenav)" [isAdmin]="isAdmin"  [loggedInUser]="loggedInUser" (onLogout)="logout($event)"></app-menu>
+  </mat-sidenav>
     <mat-sidenav-content>
       <mat-toolbar color="primary">
         <div fxHide.gt-xs>
@@ -9,9 +9,10 @@
             <mat-icon>menu</mat-icon>
           </button>
         </div>
-        <div>My Shop</div>
+      <div fxFlex fxLayout fxLayoutAlign="flex-start" fxHide.xs *ngIf="loggedInUser">Logged in as: {{user?.username}}</div>
         <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
           <ul fxLayout fxLayoutGap="10px" class="navigation-items">
+            <li *ngIf="loggedInUser && isAdmin"><a routerLink="/orders">Orders</a></li>
             <li *ngIf="loggedInUser"><a routerLink="/main">Shop</a></li>
             <li *ngIf="!(loggedInUser)"><a routerLink="/login">Login</a></li>
             <li *ngIf="loggedInUser"><a routerLink="/cart">Cart</a></li>
@@ -20,6 +21,6 @@
           </ul>
         </div>
       </mat-toolbar>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

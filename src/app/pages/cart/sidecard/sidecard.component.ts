@@ -20,8 +20,6 @@ import {User} from "../../../shared/models/user";
 export class SidecardComponent implements OnInit, OnDestroy {
   @Input() priceInput?: number;
   @Input() cartInput?: Array<Cart>;
-  cartSub: any;
-  shopSub: any;
   user: User;
 
   constructor(
@@ -40,8 +38,6 @@ export class SidecardComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     console.log("ngOnDestroy lefutott");
-    this.cartSub?.unsubscribe();
-    this.shopSub?.unsubscribe();
   }
 
   onSubmit() {
@@ -56,7 +52,7 @@ export class SidecardComponent implements OnInit, OnDestroy {
 
     this.cartInput?.forEach((item:Cart)=>{
       this.cartService.deleteFromCart(item);
-      this.mainService.decreaseItemByOne(item)
+      this.mainService.decreaseItemByOne(item);
     });
 
     // Reduce all items in storage
@@ -78,7 +74,6 @@ export class SidecardComponent implements OnInit, OnDestroy {
       .catch(err =>
         console.error(err)
       );
-    this.cartSub?.unsubscribe();
     this.router.navigateByUrl("/main");
     }
 

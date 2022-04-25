@@ -23,11 +23,32 @@ export class ViewerComponent implements OnInit {
 
   ngOnInit(): void {
     console.log("boi2");
-    this.mainService.getAll().subscribe((data: Array<ShoppingItem>) =>{
+    this.getAllLimitItems();
+  }
+
+  getAllLimitItems(){
+    const obs=this.mainService.getAllLimit().subscribe((data: ShoppingItem[]) =>{
       console.log(data);
       this.items=data;
       for(let item of this.items){
         this.mainService.loadShoppingItemImage(item.imageUrl+"").subscribe((data:string) => {
+          console.log(data);
+          item.imageUrl=data;
+        });
+      }
+      obs.unsubscribe();
+    });
+  }
+
+  getTypeItems(type: string){
+    const obs2=this.mainService.getAll().subscribe();
+    const obs=this.mainService.getAllType(type).subscribe((data:ShoppingItem[])=>{
+      obs.unsubscribe();
+      obs2.unsubscribe();
+      this.items=data;
+      for(let item of this.items){
+        const obs=this.mainService.loadShoppingItemImage(item.imageUrl+"").subscribe((data:string) => {
+          obs.unsubscribe();
           console.log(data);
           item.imageUrl=data;
         });

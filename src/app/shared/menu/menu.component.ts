@@ -10,6 +10,7 @@
 
     @Input() currentPage: string = '';
     @Input() loggedInUser?: firebase.default.User | null;
+    @Input() isAdmin?: boolean;
     @Output() selectedPage: EventEmitter<string> = new EventEmitter();
     @Output() onCloseSidenav: EventEmitter<boolean> = new EventEmitter();
     @Output() onLogout: EventEmitter<boolean> = new EventEmitter();

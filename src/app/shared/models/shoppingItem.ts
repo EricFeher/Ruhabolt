@@ -4,4 +4,5 @@ export interface ShoppingItem{
   price:number;
   count:number;
   imageUrl?:string;
+  type: string;
 }

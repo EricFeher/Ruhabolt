@@ -28,17 +28,17 @@ export class LoaderComponent implements OnInit {
 
   getItems(){
     const user=JSON.parse(localStorage.getItem('user') as string);
-
     const obs = this.cartService.getCartByUid(user.uid).subscribe( (data:Array<Cart>) => {
+        obs.unsubscribe();
         this.items=[];
-
         for(let item of data){
-          this.mainService.getById(item.itemsID).subscribe(data => {
+          const obs=this.mainService.getById(item.itemsID).subscribe(data => {
+            obs.unsubscribe();
             console.log(data);
             let shoppingItem=data as ShoppingItem;
-            const obs= this.mainService.loadShoppingItemImage(data?.imageUrl as string).subscribe(image=>{
+            const obs2=this.mainService.loadShoppingItemImage(data?.imageUrl as string).subscribe(image=>{
+              obs2.unsubscribe();
               shoppingItem.imageUrl=image as string;
-              obs.unsubscribe();
             })
             this.items.push(data as ShoppingItem);
             this.reload();

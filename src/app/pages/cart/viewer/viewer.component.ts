@@ -22,7 +22,6 @@ export class ViewerComponent implements OnInit{
   }
 
   deleteFromCart(item: ShoppingItem) {
-
     if(this.cartInput!=undefined && this.itemsInput!=undefined){
       for(let i=0;i<this.cartInput.length;i++){
         if(this.cartInput[i].itemsID==item.id){
