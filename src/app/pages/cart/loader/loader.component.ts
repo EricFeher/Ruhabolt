@@ -4,13 +4,14 @@ import {ShoppingItem} from "../../../shared/models/shoppingItem";
 import {CartService} from "../../../shared/services/cart.service";
 import {MainService} from "../../../shared/services/main.service";
 import {Router} from "@angular/router";
+import {reload} from "@angular/fire/auth";
 
 @Component({
   selector: 'app-loader',
   templateUrl: './loader.component.html',
   styleUrls: ['./loader.component.scss']
 })
-export class LoaderComponent implements OnInit {
+export class LoaderComponent implements OnInit,OnChanges {
   items: Array<ShoppingItem>=[];
   @Output() priceEmitter: EventEmitter<number>= new EventEmitter();
   @Output() itemsEmitter: EventEmitter<Array<ShoppingItem>> =new EventEmitter();
@@ -26,10 +27,16 @@ export class LoaderComponent implements OnInit {
     }
   }
 
+  ngOnChanges(){
+    this.getItems();
+  }
+
+
+
   getItems(){
     const user=JSON.parse(localStorage.getItem('user') as string);
     const obs = this.cartService.getCartByUid(user.uid).subscribe( (data:Array<Cart>) => {
-        obs.unsubscribe();
+      obs.unsubscribe();
         this.items=[];
         for(let item of data){
           const obs=this.mainService.getById(item.itemsID).subscribe(data => {
@@ -39,16 +46,14 @@ export class LoaderComponent implements OnInit {
             const obs2=this.mainService.loadShoppingItemImage(data?.imageUrl as string).subscribe(image=>{
               obs2.unsubscribe();
               shoppingItem.imageUrl=image as string;
-            })
+              this.reload();
+            });
             this.items.push(data as ShoppingItem);
             this.reload();
             this.itemsEmitter.emit(this.items);
           });
         }
-
         this.cartEmitter.emit(data);
-        obs.unsubscribe();
-
         if(data.length===0){
             this.router.navigateByUrl("/main")
           }

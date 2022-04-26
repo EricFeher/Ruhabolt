@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ShoppingItem} from "../../../shared/models/shoppingItem";
 import {Router} from "@angular/router";
 import {MainService} from "../../../shared/services/main.service";
@@ -13,7 +13,6 @@ import {CartService} from "../../../shared/services/cart.service";
 export class ViewerComponent implements OnInit {
   items: Array<ShoppingItem> = []
 
-  //TODO: SELECT WHAT YOU WANT TO SEE @INPUT, @OUTPUT
 
   constructor(
     private router: Router,
@@ -28,6 +27,7 @@ export class ViewerComponent implements OnInit {
 
   getAllLimitItems(){
     const obs=this.mainService.getAllLimit().subscribe((data: ShoppingItem[]) =>{
+      obs.unsubscribe();
       console.log(data);
       this.items=data;
       for(let item of this.items){
@@ -36,7 +36,7 @@ export class ViewerComponent implements OnInit {
           item.imageUrl=data;
         });
       }
-      obs.unsubscribe();
+
     });
   }
 

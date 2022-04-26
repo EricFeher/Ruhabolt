@@ -5,9 +5,7 @@ import {CartService} from "../../../shared/services/cart.service";
 import {Cart} from "../../../shared/models/cart";
 import {Order} from "../../../shared/models/order";
 import {MainService} from "../../../shared/services/main.service";
-import {ShoppingItem} from "../../../shared/models/shoppingItem";
 import {Router} from "@angular/router";
-import {FormControl, FormGroup} from "@angular/forms";
 import {User} from "../../../shared/models/user";
 
 @Component({

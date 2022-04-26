@@ -12,6 +12,7 @@ import {Router} from "@angular/router";
 export class ViewerComponent implements OnInit{
   @Input() itemsInput?: Array<ShoppingItem>;
   @Input() cartInput?: Array<Cart>;
+  @Output() deleteClicked: EventEmitter<any>= new EventEmitter();
 
   constructor(private cartService:CartService,
               private router: Router
@@ -29,6 +30,9 @@ export class ViewerComponent implements OnInit{
             this.itemsInput?.splice(i,1);
             if(this.itemsInput?.length===0){
               this.router.navigateByUrl("/main");
+            }
+            else{
+              this.deleteClicked.emit();
             }
           }).catch(err => console.error(err));
           break;
